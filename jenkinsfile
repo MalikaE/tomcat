@@ -16,5 +16,9 @@ node {
         sshagent(['ec2-user-1']) {
           sh "scp -o StrictHostKeyChecking=no target/tomcat.war ec2-user@172.31.30.214:/opt/tomcat/webapps"
         }
+    stage ('Sonar-Analysis') { 
+         withSonarQubeEnv('sonarqube') {
+          sh "${mvnHome}/bin/mvn sonar:sonar"
+      }
     }
 }
